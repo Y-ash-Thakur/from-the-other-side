@@ -1,4 +1,4 @@
-export function sendReasponse(res, statusCode, contentType, payload) {
+export function sendResponse(res, statusCode, contentType, payload) {
   res.statusCode = statusCode;
   res.setHeader('Content-Type', contentType);
   res.end(payload);

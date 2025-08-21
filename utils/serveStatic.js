@@ -1,15 +1,31 @@
 import path from 'node:path';
-import { sendReasponse } from './sendResponse.js';
+import { sendResponse } from './sendResponse.js';
 import fs from 'node:fs/promises';
+import { getContentType } from './getContentType.js';
+import { send } from 'node:process';
 
 export async function serveStatic(req, res, baseDir) {
-  
-  const filePath = path.join(baseDir, 'public', 'index.html');
+
+  const publicDir = path.join(baseDir, 'public')
+
+  const filePath = path.join(
+    publicDir, 
+    req.url === '/' ? 'index.html' : req.url);
+
+    const ext = path.extname(filePath).toLowerCase();
+
+    let contentType = getContentType(ext);
   
   try {
     const content = await fs.readFile(filePath)
-    sendReasponse(res, 200, 'text/html', content)
+    sendResponse(res, 200, contentType, content)
+
   } catch (err) {
-      console.log(err);
+      if (err.code === 'ENOENT'){
+        const content = await fs.readFile(path.join(publicDir, '404.html'));
+        sendResponse(res, 404, 'text/html', content);
+      } else {
+        sendResponse(res, 500, 'text/html', '<html><h1>Server Error: ${err.code}</h1></html>');
+      }
   }
-}
+} 
