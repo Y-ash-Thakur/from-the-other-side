@@ -1,9 +1,13 @@
 import http from 'node:http';
-import { serveStatic } from './utils/serveStatic.js';;
+import { serveStatic } from './utils/serveStatic.js';
+import { getData } from './utils/getData.js';
+
 
 const PORT = 8000;
 
 const __dirname = (import.meta.dirname);
+
+console.log( await getData());
 
 const server = http.createServer( async(req, res) => {
 
@@ -12,7 +16,3 @@ const server = http.createServer( async(req, res) => {
 })
 
 server.listen(PORT, () => console.log(`Connected on port: ${PORT}`))
-
-
-
-// console.log(process.cwd());  => /home/projects/s0fcj7p84c
