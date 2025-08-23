@@ -2,7 +2,6 @@ import path from 'node:path';
 import { sendResponse } from './sendResponse.js';
 import fs from 'node:fs/promises';
 import { getContentType } from './getContentType.js';
-import { send } from 'node:process';
 
 export async function serveStatic(req, res, baseDir) {
 
