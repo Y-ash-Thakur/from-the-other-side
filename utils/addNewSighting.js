@@ -16,7 +16,7 @@ export async function addNewSighting(newSighting) {
       JSON.stringify(sightings, null, 2),
       'utf8'
     )
-    
+
   } catch (err) {
     throw new Error(err)
   }
